@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f6f8b">
+<title>Hesapça</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9f0ee;--card:#fff;--ink:#14232b;--mut:#5f737c;--key:#fff;--op:#d3e6ea;--ac:#f2a900;--acink:#2b1d00;--pri:#1f6f8b;--ok:#17855a;--bad:#c93d3d;--ledge:#b7c8cc;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1a20;--card:#182830;--ink:#e8f1f3;--mut:#8fa5ad;--key:#1f323b;--op:#2a4a56;--ac:#f2b73a;--pri:#5fb5d1;--ok:#4fcf9b;--bad:#ff7a7a;--ledge:#08121a}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1a20;--card:#182830;--ink:#e8f1f3;--mut:#8fa5ad;--key:#1f323b;--op:#2a4a56;--ac:#f2b73a;--pri:#5fb5d1;--ok:#4fcf9b;--bad:#ff7a7a;--ledge:#08121a}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.4 "Bricolage Grotesque",system-ui,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+#v{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;max-width:520px;width:100%;margin:0 auto}
+h2{margin:4px 0 0;font-size:28px;font-weight:800;letter-spacing:-.02em}h3{margin:0 0 8px;font-size:18px}
+p{margin:0}.m{color:var(--mut);font-size:14px}
+button{font:inherit;font-weight:600;color:var(--ink);background:var(--key);border:0;border-radius:18px;padding:14px;box-shadow:0 3px 0 var(--ledge);cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:active{transform:translateY(3px);box-shadow:none}button:disabled{opacity:.3}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+nav{display:flex;gap:6px;padding:8px 12px;background:var(--card);max-width:520px;width:100%;margin:0 auto;border-radius:22px 22px 0 0}
+nav button{flex:1;background:none;box-shadow:none;color:var(--mut);padding:10px}nav button.on{background:var(--op);color:var(--ink)}
+.disp{min-height:140px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;gap:4px;position:relative;padding:4px 4px 0}
+.hb{position:absolute;left:0;top:0;padding:8px 14px;font-size:14px;color:var(--pri)}
+#ex{font-size:44px;font-weight:800;letter-spacing:-.03em;max-width:100%;overflow-x:auto;white-space:nowrap}
+#rs{font-size:24px;color:var(--mut);min-height:32px}
+.pad{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:10px;min-height:300px}
+.pad button{font-size:26px;padding:0}.pad .o{background:var(--op);color:var(--pri)}.pad .e{background:var(--ac);color:var(--acink)}.pad .c{color:var(--bad)}
+#hp{flex:1;overflow:auto;background:var(--card);border-radius:18px;padding:8px}
+#hp div{padding:12px;border-radius:12px;cursor:pointer}#hp div:active{background:var(--op)}
+.cards{display:grid;gap:12px}
+.card{text-align:left;display:flex;flex-direction:column;gap:4px;background:var(--card);padding:18px;border-left:10px solid var(--pri)}
+.card:nth-child(2){border-color:var(--ac)}.card:nth-child(3){border-color:var(--ok)}
+.card b{font-size:22px}.card span{color:var(--mut);font-weight:400}.card i{font-style:normal;font-size:14px;color:var(--pri)}
+.chips,.row,.pad3{display:flex;gap:10px;flex-wrap:wrap}.row>button{flex:1}
+.chips .chip{flex:1;font-size:40px;font-weight:800;padding:22px 0}
+.pad3{display:grid;grid-template-columns:repeat(3,1fr)}.pad3 .chip{font-size:28px;padding:16px 0}
+.chip.on{background:var(--pri);color:var(--card)}
+.op{font-size:24px}.go{background:var(--ac);color:var(--acink)}.big{padding:22px;font-size:22px}
+.line{background:var(--card);border-radius:16px;padding:16px;font-size:30px;font-weight:800;min-height:68px;letter-spacing:.06em;overflow-x:auto;white-space:nowrap}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
+.q{font-size:52px;font-weight:800;text-align:center;padding:12px 0;letter-spacing:-.02em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ans{font-size:30px;padding:26px 0}
+.bar{height:12px;border-radius:8px;background:var(--op);overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.gr{display:flex;justify-content:space-between;background:var(--card);border-radius:12px;padding:10px 14px;margin-bottom:6px;font-size:20px}
+.gr span{color:var(--pri);letter-spacing:.2em}
+section{background:var(--card);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+input{font:inherit;font-size:20px;padding:12px;border-radius:12px;border:2px solid var(--op);background:var(--bg);color:var(--ink);width:100%;min-width:0}
+.res{display:grid;grid-template-columns:1fr auto;gap:4px 12px}.res b{text-align:right}
+.ir{display:flex;gap:8px}
+</style></head>
+<body>
+<main id="v"></main>
+<nav><button data-t="calc" onclick="go('calc')">Hesap</button><button data-t="games" onclick="go('games')">Oyunlar</button><button data-t="tools" onclick="go('tools')">Araçlar</button></nav>
+<script>
+const $=s=>document.querySelector(s),V=$('#v');
+const S={get(k){try{return+localStorage.getItem(k)||0}catch(e){return 0}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const fmt=n=>isFinite(n)?String(+n.toPrecision(12)).replace('.',','):'Hata';
+const money=n=>n.toLocaleString('tr-TR',{style:'currency',currency:'TRY'});
+const num=s=>parseFloat(String(s).replace(',','.'))||0;
+let T;
+function ev(s){
+ s=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/,/g,'.');
+ s=s.replace(/(\d+(?:\.\d+)?)([+-])(\d+(?:\.\d+)?)%/g,'$1$2($1*$3/100)').replace(/(\d+(?:\.\d+)?)%/g,'($1/100)');
+ s+=')'.repeat(Math.max(0,(s.match(/\(/g)||[]).length-(s.match(/\)/g)||[]).length));
+ s=s.replace(/(\d|\))\(/g,'$1*(');
+ if(!/^[\d+\-*/.() ]+$/.test(s))return NaN;
+ try{return Function('"use strict";return('+s+')')()}catch(e){return NaN}
+}
+function go(t){clearInterval(T);const m=['g24','blitz','code'].includes(t)?'games':t;
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==m));
+ ({calc,games,tools,g24,blitz,code})[t]()}
+
+/* ---------- HESAP ---------- */
+let ex='',done=0,hist=[];
+function calc(){
+ const K=[['C','c'],['()','o'],['%','o'],['÷','o'],['7'],['8'],['9'],['×','o'],['4'],['5'],['6'],['−','o'],['1'],['2'],['3'],['+','o'],['0'],[','],['⌫','o'],['=','e']];
+ V.innerHTML=`<div class=disp><button class=hb onclick=hs()>Geçmiş</button><div id=ex></div><div id=rs></div></div><div id=hp hidden></div><div class=pad>${K.map(([k,c])=>`<button class="${c||''}" onclick="press('${k}')">${k}</button>`).join('')}</div>`;up()}
+function up(){$('#ex').textContent=ex||'0';const r=!done&&/[+−×÷%(]/.test(ex)?ev(ex):NaN;$('#rs').textContent=isNaN(r)?'':fmt(r)}
+function press(k){
+ const L=ex.slice(-1),isOp=c=>'+−×÷'.includes(c)&&c;
+ if(k=='C'){ex='';done=0}
+ else if(k=='⌫'){ex=ex.slice(0,-1);done=0}
+ else if(k=='='){const r=ev(ex);if(isNaN(r)||!isFinite(r)){$('#rs').textContent='Geçersiz ifade';return}
+  const s=fmt(r);hist.unshift(ex+' = '+s);ex=s;done=1}
+ else{
+  if(done){if(/[\d,]/.test(k))ex='';done=0}
+  if(k=='()'){const o=(ex.match(/\(/g)||[]).length,c=(ex.match(/\)/g)||[]).length;k=o>c&&/[\d)%]/.test(L)?')':'('}
+  if(isOp(k)){if(!ex){if(k!='−')return}else if(isOp(L))ex=ex.slice(0,-1)}
+  if(k==','){const n=ex.split(/[^\d,]/).pop();if(n.includes(','))return;if(!n)k='0,'}
+  ex+=k}
+ up()}
+function hs(){const h=$('#hp'),p=$('.pad');h.hidden=!h.hidden;p.hidden=!h.hidden;
+ if(!h.hidden)h.innerHTML=hist.length?hist.slice(0,30).map((x,i)=>`<div onclick=hl(${i})>${x}</div>`).join(''):'<p class=m style="padding:12px">Henüz işlem yok.</p>'}
+function hl(i){ex=hist[i].split(' = ')[1];done=1;hs();up()}
+
+/* ---------- OYUNLAR ---------- */
+function games(){V.innerHTML='<h2>Oyunlar</h2><div class=cards>'+[
+ ['g24','24’ü bul','Dört sayıyla işlem kur, tam 24 çıkar.','Çözülen: '+S.get('s24')],
+ ['blitz','Hız Turu','30 saniyede olabildiğince çok işlem çöz.','En iyi: '+S.get('bb')],
+ ['code','Kod Kırıcı','Gizli 4 haneli kodu mantıkla tahmin et.','En az tahmin: '+(S.get('bk')||'—')]
+ ].map(([k,t,d,s])=>`<button class=card onclick="go('${k}')"><b>${t}</b><span>${d}</span><i>${s}</i></button>`).join('')+'</div>'}
+
+/* 24'ü bul */
+let N,U,K24,sol;
+function solve(a){if(a.length==1)return Math.abs(a[0].v-24)<1e-6?a[0].e:null;
+ for(let i=0;i<a.length;i++)for(let j=0;j<a.length;j++){if(i==j)continue;
+  const r=a.filter((_,k)=>k!=i&&k!=j),x=a[i],y=a[j];
+  const c=[[x.v+y.v,`(${x.e}+${y.e})`],[x.v-y.v,`(${x.e}−${y.e})`],[x.v*y.v,`(${x.e}×${y.e})`]];
+  if(Math.abs(y.v)>1e-9)c.push([x.v/y.v,`(${x.e}÷${y.e})`]);
+  for(const[v,e]of c){const s=solve([...r,{v,e}]);if(s)return s}}return null}
+function g24(n){
+ if(n!==1){do{N=[0,0,0,0].map(()=>1+Math.random()*9|0);sol=solve(N.map(v=>({v,e:''+v})))}while(!sol);U=[];K24=[]}
+ V.innerHTML=`<h2>24’ü bul</h2><p class=m>Dört sayının hepsini birer kez kullan. + − × ÷ ve parantezle sonucu 24 yap.</p>
+ <div class=chips>${N.map((v,i)=>`<button class=chip ${U[i]?'disabled':''} onclick=t24(${i})>${v}</button>`).join('')}</div>
+ <div class=line>${K24.map(x=>x.s).join(' ')||'…'}</div>
+ <div class=row>${['+','−','×','÷','(',')'].map(o=>`<button class=op onclick="o24('${o}')">${o}</button>`).join('')}</div>
+ <div class=row><button onclick=b24()>Sil</button><button class=go onclick=c24()>Kontrol</button></div>
+ <div class=row><button onclick=g24()>Yeni sayılar</button><button onclick=h24()>İpucu</button></div>
+ <div id=msg class=m></div>`;
+ document.querySelectorAll('.chips .chip').forEach((b,i)=>b.disabled=!!U[i])}
+function t24(i){if(K24.length&&/[\d)]/.test(K24.at(-1).s))return;U[i]=1;K24.push({s:''+N[i],i});g24(1)}
+function o24(o){K24.push({s:o,i:-1});g24(1)}
+function b24(){const p=K24.pop();if(p&&p.i>=0)U[p.i]=0;g24(1)}
+function msg(t,c){const m=$('#msg');m.textContent=t;m.className=c||'m'}
+function c24(){if(U.filter(Boolean).length<4)return msg('Dört sayıyı da kullanmalısın.','bad');
+ const r=ev(K24.map(x=>x.s).join(''));
+ if(isNaN(r))return msg('Bu ifade geçersiz.','bad');
+ if(Math.abs(r-24)<1e-6){S.set('s24',S.get('s24')+1);msg('Doğru! Yeni sayılar geliyor.','ok');setTimeout(()=>g24(),1100)}
+ else msg('Sonuç '+fmt(r)+' çıktı, 24 olmalı.','bad')}
+function h24(){msg('Bir çözüm: '+sol)}
+
+/* Hız Turu */
+let sc,tm,streak,q;
+function blitz(){V.innerHTML=`<h2>Hız Turu</h2><p class=m>30 saniyen var. Doğru cevap puan kazandırır, yanlış cevap 3 saniye götürür.</p><button class="go big" onclick=bs()>Başla</button><p class=m>En iyi: ${S.get('bb')}</p>`}
+function bs(){sc=0;tm=30;streak=0;nq();clearInterval(T);T=setInterval(()=>{tm-=.1;if(tm<=0)return be();const b=$('#bar');if(b)b.style.width=Math.min(100,tm/30*100)+'%'},100)}
+function nq(){
+ const L=Math.min(4,sc>>2),r=n=>1+Math.random()*n|0,o=['+','−','×'][L?r(3)-1:r(2)-1];
+ let a=r(9+L*12),b=r(9+L*9);
+ if(o=='×'){a=r(4+L*2)+1;b=r(8)+1}
+ if(o=='−'&&b>a)[a,b]=[b,a];
+ const A=o=='+'?a+b:o=='−'?a-b:a*b,s=new Set([A]);
+ while(s.size<4)s.add(A+(r(2)==1?1:-1)*r(Math.max(3,L*4+4)));
+ q={t:`${a} ${o} ${b}`,A};
+ V.innerHTML=`<div class=bar><i id=bar style="width:${Math.min(100,tm/30*100)}%"></i></div><p class=m>Puan: ${sc}&nbsp;&nbsp;Seri: ${streak}</p><div class=q>${q.t}</div><div class=grid2>${[...s].sort(()=>Math.random()-.5).map(c=>`<button class=ans onclick=ba(${c})>${c}</button>`).join('')}</div>`}
+function ba(c){if(c==q.A){streak++;sc++;tm=Math.min(30,tm+.5)}else{streak=0;tm-=3}nq()}
+function be(){clearInterval(T);const best=S.get('bb');if(sc>best)S.set('bb',sc);
+ V.innerHTML=`<h2>Süre bitti</h2><div class=q>${sc}</div><p class="${sc>best?'ok':'m'}" style="text-align:center">${sc>best?'Yeni rekor!':'En iyi: '+best}</p><button class="go big" onclick=bs()>Tekrar oyna</button>`}
+
+/* Kod Kırıcı */
+let sec,gs,cur;
+function code(n){
+ if(!n){sec=[];while(sec.length<4){const d=1+Math.random()*9|0;if(!sec.includes(d))sec.push(d)}gs=[];cur=[]}
+ const won=gs.length&&gs.at(-1).b==4,over=won||gs.length>=10;
+ V.innerHTML=`<h2>Kod Kırıcı</h2><p class=m>Gizli kod 1–9 arası, tekrarsız 4 rakam. ● doğru rakam doğru yerde, ○ doğru rakam yanlış yerde. 10 hakkın var.</p>
+ <div>${gs.map(g=>`<div class=gr><b>${g.g.join('')}</b><span>${'●'.repeat(g.b)}${'○'.repeat(g.c)}</span></div>`).join('')}</div>`+
+ (over?`<div class="${won?'ok':'bad'}">${won?gs.length+' tahminde çözdün!':'Kod '+sec.join('')+' idi.'}</div><button class="go big" onclick=code()>Yeni kod</button>`:
+ `<div class=line>${[0,1,2,3].map(i=>cur[i]||'_').join(' ')}</div><div class=pad3>${[1,2,3,4,5,6,7,8,9].map(d=>`<button class=chip ${cur.includes(d)?'disabled':''} onclick=cd(${d})>${d}</button>`).join('')}</div><div class=row><button onclick=bc()>Sil</button><button class=go onclick=cg()>Tahmin et</button></div>`)+
+ `<p class=m>En az tahmin: ${S.get('bk')||'—'}</p>`;
+ document.querySelectorAll('.chip[disabled]').forEach(b=>b.disabled=true)}
+function cd(d){if(cur.length<4)cur.push(d);code(1)}
+function bc(){cur.pop();code(1)}
+function cg(){if(cur.length<4)return;const b=cur.filter((d,i)=>d==sec[i]).length,c=cur.filter(d=>sec.includes(d)).length-b;
+ gs.push({g:[...cur],b,c});cur=[];
+ if(b==4){const p=S.get('bk');if(!p||gs.length<p)S.set('bk',gs.length)}code(1)}
+
+/* ---------- ARAÇLAR ---------- */
+let rate=20,incl=0;
+function tools(){V.innerHTML=`<h2>Araçlar</h2>
+<section><h3>KDV</h3><input id=a1 inputmode=decimal placeholder="Tutar (₺)" oninput=tv()>
+<div class=row>${[1,10,20].map(r=>`<button class="chip rt${r==rate?' on':''}" onclick="sr(${r},this)">%${r}</button>`).join('')}</div>
+<div class=row><button class="chip md${incl?'':' on'}" onclick="sm(0,this)">KDV hariç</button><button class="chip md${incl?' on':''}" onclick="sm(1,this)">KDV dahil</button></div>
+<div class=res id=o1></div></section>
+<section><h3>Hesabı böl</h3><input id=a2 inputmode=decimal placeholder="Hesap tutarı (₺)" oninput=ts()>
+<div class=ir><input id=a3 inputmode=numeric value=2 oninput=ts() aria-label="Kişi sayısı"><input id=a4 inputmode=decimal value=10 oninput=ts() aria-label="Bahşiş yüzdesi"></div>
+<p class=m>Soldaki kutu kişi sayısı, sağdaki bahşiş yüzdesi.</p><div class=res id=o2></div></section>`;tv();ts()}
+function sel(c,b){document.querySelectorAll('.'+c).forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+function sr(r,b){rate=r;sel('rt',b);tv()}
+function sm(i,b){incl=i;sel('md',b);tv()}
+function tv(){const a=num($('#a1').value),o=$('#o1');if(!a){o.innerHTML='<span class=m>Tutarı gir.</span>';return}
+ const net=incl?a/(1+rate/100):a,tot=incl?a:a*(1+rate/100);
+ o.innerHTML=`<span>KDV hariç</span><b>${money(net)}</b><span>KDV (%${rate})</span><b>${money(tot-net)}</b><span>KDV dahil</span><b>${money(tot)}</b>`}
+function ts(){const a=num($('#a2').value),n=Math.max(1,Math.round(num($('#a3').value))),p=num($('#a4').value),o=$('#o2');
+ if(!a){o.innerHTML='<span class=m>Tutarı gir.</span>';return}
+ const t=a*(1+p/100);o.innerHTML=`<span>Toplam</span><b>${money(t)}</b><span>Kişi başı</span><b>${money(t/n)}</b>`}
+
+go('calc');
+</script></body></html>
